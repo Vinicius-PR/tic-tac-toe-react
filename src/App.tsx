@@ -8,6 +8,7 @@ import Home from "./pages/Home"
 
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Game from "./pages/Game"
+import Modal from "./components/Modal"
 
 function App() {
 
@@ -31,7 +32,7 @@ function App() {
       mark: mark === 'X' ? 'O': 'X'
     })
   }
-
+  
   function setNamesPlayer(enemy: string) {
     setPlayer1({
       ...player1,
@@ -54,6 +55,7 @@ function App() {
             <Route path="/game" element={<Game />}/>
           </Routes>
         </BrowserRouter>
+        {/* <Modal/> */}
       </ThemeProvider>
     </div>
   );

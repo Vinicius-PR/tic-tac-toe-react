@@ -24,7 +24,7 @@ export const GlobalStyle = createGlobalStyle`
   }
 `
 
-const BaseButton = styled.button`
+const BasePrimaryButton = styled.button`
   border: none;
   border-radius: 15px;
   transition: all 0.2s ease;
@@ -32,7 +32,15 @@ const BaseButton = styled.button`
   padding: 17px 0 25px;
 `
 
-export const PrimaryBtn  = styled(BaseButton)`
+const BaseSecondaryButton = styled.button`
+  border: none;
+  border-radius: 10px;
+  transition: all 0.2s ease;
+  color: ${props => props.theme.darkNavy};
+  padding: 15px 17px;
+`
+
+export const PrimaryBtnYellow  = styled(BasePrimaryButton)`
   background-color: ${props => props.theme.lightYellow};
   box-shadow: 0px -8px 0px 0px #CC8B13 inset;
 
@@ -41,12 +49,30 @@ export const PrimaryBtn  = styled(BaseButton)`
   }
 `
 
-export const SecondaryBtn = styled(BaseButton)`
+export const PrimaryBtnBlue = styled(BasePrimaryButton)`
   background-color: ${props => props.theme.lightBlue};
   box-shadow: 0px -8px 0px 0px #118C87 inset;
 
   &:hover {
     background-color: ${props => props.theme.lightBlueHover};
+  }
+`
+
+export const SecondaryBtnYellow = styled(BaseSecondaryButton)`
+  background-color: ${props => props.theme.lightYellow};
+  box-shadow: 0px -4px 0px 0px #CC8B13 inset;
+
+  &:hover {
+    background-color: ${props => props.theme.lightYellowHover};
+  }
+`
+
+export const SecondaryBtnSilver = styled(BaseSecondaryButton)`
+  background-color: ${props => props.theme.silver};
+  box-shadow: 0px -4px 0px 0px #6B8997 inset;
+
+  &:hover {
+    background-color: ${props => props.theme.silverHover};
   }
 `
 
@@ -62,11 +88,21 @@ export const BodyText = styled.p`
 export const HeadingLarge = styled.h1 `
   font-size: 2.5rem; // 40px
   letter-spacing: 2.5px;
+
+  @media (max-width: 345px) {
+    font-size: 1.5rem; // 24px
+    letter-spacing: 1.5px;
+  }
 `
 
 export const HeadingMedium = styled.h2`
   font-size: 1.5rem; // 24px
   letter-spacing: 1.5px;
+
+  @media (max-width: 345px) {
+    font-size: 1.25rem;  // 20px
+    letter-spacing: 1.25px;
+  }
 `
 
 export const HeadingSmall = styled.h3`
@@ -75,7 +111,11 @@ export const HeadingSmall = styled.h3`
 `
 
 export const HeadingExtraSmall = styled.h4`
-  color: ${props => props.theme.silver};
   font-size: 1rem; // 16px
   letter-spacing: 1px;
+
+  @media (max-width: 345px) {
+    font-size: 0.875rem;  // 14px
+    letter-spacing: 0.875px;
+  }
 `

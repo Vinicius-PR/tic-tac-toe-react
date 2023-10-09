@@ -1,6 +1,6 @@
 import { HomeContainer, SelectContainer, ButtonContainer } from "./styles"
 import logo from '../../assets/logo.svg'
-import { BodyText, HeadingExtraSmall, HeadingSmall, PrimaryBtn, SecondaryBtn } from "../../styles/global"
+import { BodyText, HeadingExtraSmall, HeadingSmall, PrimaryBtnYellow, PrimaryBtnBlue } from "../../styles/global"
 import { useState } from "react"
 import { useNavigate } from 'react-router-dom'
 
@@ -57,23 +57,23 @@ export default function Home({ setPlayerMark, setNamesPlayer }: HomeProps) {
 
       <ButtonContainer>
 
-        <PrimaryBtn 
+        <PrimaryBtnYellow 
           disabled={!isMarkSelected} 
           onClick={() => {
             setNamesPlayer('cpu')
             navigate('/game')
           }}>
           <HeadingSmall>new game (vs cpu)</HeadingSmall>
-        </PrimaryBtn>
+        </PrimaryBtnYellow>
 
-        <SecondaryBtn 
+        <PrimaryBtnBlue 
           disabled={!isMarkSelected} 
           onClick={() => {
             setNamesPlayer('player')
             navigate('/game')
           }}>
           <HeadingSmall>new game (vs player)</HeadingSmall>
-        </SecondaryBtn>
+        </PrimaryBtnBlue>
         
       </ButtonContainer>     
 
