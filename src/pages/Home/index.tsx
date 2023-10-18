@@ -5,14 +5,22 @@ import { useState } from "react"
 import { useNavigate } from 'react-router-dom'
 
 interface HomeProps {
-  setPlayerMark: (mark: string) => void
-  setNamesPlayer: (enemy: string) => void
+  handleSetPlayerMark: (mark: string) => void
+  handleSetNamesPlayer: (enemy: string) => void
 }
 
-export default function Home({ setPlayerMark, setNamesPlayer }: HomeProps) {
+export default function Home({ handleSetPlayerMark, handleSetNamesPlayer }: HomeProps) {
 
   const [isMarkSelected, setIsMarkSelected] = useState(false)
   let navigate = useNavigate()
+
+  function onButtonClick(versus: string) {
+    const canSetFirstPlayerJSON = JSON.stringify(true);
+    sessionStorage.setItem("tic-tac-toe:canSetFirstPlayer", canSetFirstPlayerJSON)
+
+    handleSetNamesPlayer(versus)
+    navigate('/game')
+  }
 
   return (
     <HomeContainer>
@@ -31,7 +39,7 @@ export default function Home({ setPlayerMark, setNamesPlayer }: HomeProps) {
               id="markX" 
               value={'X'} 
               onInput={() => {
-                setPlayerMark('X')
+                handleSetPlayerMark('X')
                 setIsMarkSelected(true)
               }} />
           </label>
@@ -47,7 +55,7 @@ export default function Home({ setPlayerMark, setNamesPlayer }: HomeProps) {
               id="markO" 
               value={'O'} 
               onInput={() => {
-                setPlayerMark('O')
+                handleSetPlayerMark('O')
                 setIsMarkSelected(true)
               }}/>
           </label>
@@ -60,8 +68,7 @@ export default function Home({ setPlayerMark, setNamesPlayer }: HomeProps) {
         <PrimaryBtnYellow 
           disabled={!isMarkSelected} 
           onClick={() => {
-            setNamesPlayer('cpu')
-            navigate('/game')
+            onButtonClick('cpu')
           }}>
           <HeadingSmall>new game (vs cpu)</HeadingSmall>
         </PrimaryBtnYellow>
@@ -69,8 +76,7 @@ export default function Home({ setPlayerMark, setNamesPlayer }: HomeProps) {
         <PrimaryBtnBlue 
           disabled={!isMarkSelected} 
           onClick={() => {
-            setNamesPlayer('player')
-            navigate('/game')
+            onButtonClick('player')
           }}>
           <HeadingSmall>new game (vs player)</HeadingSmall>
         </PrimaryBtnBlue>

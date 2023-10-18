@@ -1,22 +1,29 @@
+import { PlayerProps } from "../../../../App";
 import { BodyText, HeadingMedium } from "../../../../styles/global";
 import { FooterBox, FooterContainer } from "./styles";
 
-export default function Footer() {
+interface FooterProps {
+  player1: PlayerProps
+  player2: PlayerProps
+  tie: number
+}
+
+export default function Footer({ player1, player2, tie }: FooterProps) {
   return (
     <FooterContainer>
       <FooterBox $backGroundColor={'#31C3BD'}>
-        <BodyText>X (YOU)</BodyText>
-        <HeadingMedium>14</HeadingMedium>
+        <BodyText>X {player1.mark === 'X' ? `(${player1.displayName})` : `(${player2.displayName})`}</BodyText>
+        <HeadingMedium>{player1.mark === 'X' ? player1.points : player2.points}</HeadingMedium>
       </FooterBox>
 
       <FooterBox $backGroundColor={'#A8BFC9'}>
         <BodyText>TIES</BodyText>
-        <HeadingMedium>32</HeadingMedium>
+        <HeadingMedium>{tie}</HeadingMedium>
       </FooterBox>
 
       <FooterBox $backGroundColor={'#F2B137'}>
-        <BodyText>O (CPU)</BodyText>
-        <HeadingMedium>11</HeadingMedium>
+        <BodyText>O {player1.mark === 'O' ? `(${player1.displayName})` : `(${player2.displayName})`}</BodyText>
+        <HeadingMedium>{player1.mark === 'O' ? player1.points : player2.points}</HeadingMedium>
       </FooterBox>
     </FooterContainer>
   )
