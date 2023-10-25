@@ -7,18 +7,22 @@ import { useNavigate } from 'react-router-dom'
 interface HomeProps {
   handleSetPlayerMark: (mark: string) => void
   handleSetNamesPlayer: (enemy: string) => void
+  handleSetFirstPlayer: () => void
+  handleSetEnemy: (enemy: 'player' | 'cpu' | '') => void
 }
 
-export default function Home({ handleSetPlayerMark, handleSetNamesPlayer }: HomeProps) {
+export default function Home({ handleSetPlayerMark, handleSetNamesPlayer, handleSetFirstPlayer, handleSetEnemy }: HomeProps) {
 
   const [isMarkSelected, setIsMarkSelected] = useState(false)
   let navigate = useNavigate()
 
-  function onButtonClick(versus: string) {
+  function onButtonClick(versus: 'player' | 'cpu' | '') {
     const canSetFirstPlayerJSON = JSON.stringify(true);
     sessionStorage.setItem("tic-tac-toe:canSetFirstPlayer", canSetFirstPlayerJSON)
-
+    
+    handleSetEnemy(versus)
     handleSetNamesPlayer(versus)
+    handleSetFirstPlayer()
     navigate('/game')
   }
 

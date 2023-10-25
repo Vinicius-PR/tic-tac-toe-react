@@ -7,9 +7,11 @@ interface HeaderProps {
   currentPlayer: string
   player1: PlayerProps
   player2: PlayerProps
+  handleSetModalReset: () => void
 }
 
-export default function Header({ currentPlayer, player1, player2 }:HeaderProps) {
+export default function Header({ currentPlayer, player1, player2, handleSetModalReset }:HeaderProps) {
+
   return (
     <HeaderContainer>
       <img src={logoImg} alt="Logo" />
@@ -37,11 +39,10 @@ export default function Header({ currentPlayer, player1, player2 }:HeaderProps) 
             )
           )
         }
-        
 
         <span>Turn</span>
       </div>
-      <button type="button" aria-label="Restart">
+      <button onClick={handleSetModalReset} type="button" aria-label="Restart">
         <img src={restartIcon} alt="restart" />
       </button>
     </HeaderContainer>

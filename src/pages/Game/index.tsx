@@ -5,35 +5,28 @@ import Footer from './components/Footer'
 import { GridArrayProps, PlayerProps } from '../../App'
 
 interface GameComponentProps {
-  handleSetCurrentPlayer: () => void
   handleSetGrid: (position: number) => void
   currentPlayer: string
   grid: GridArrayProps[]
-  handleSetFirstPlayer: () => void
   checkWin: () => number[]
   player1: PlayerProps
   player2: PlayerProps
   tie: number
+  handleSetModalReset: () => void
+  enemy: 'player' | 'cpu' | ''
 }
 
 export default function Game({ 
-  handleSetCurrentPlayer, 
   currentPlayer, 
   handleSetGrid, 
-  grid, 
-  handleSetFirstPlayer, 
+  grid,
   checkWin, 
   player1, 
   player2,
-  tie
+  tie,
+  handleSetModalReset,
+  enemy
   }: GameComponentProps) {
-
-  let canSetFirstPlayer = sessionStorage.getItem("tic-tac-toe:canSetFirstPlayer");
-  if (canSetFirstPlayer === 'true') {
-    handleSetFirstPlayer()
-    const canSetFirstPlayerJSON = JSON.stringify(false);
-    sessionStorage.setItem("tic-tac-toe:canSetFirstPlayer", canSetFirstPlayerJSON)
-  }
 
   return (
     <GameContainer>
@@ -41,13 +34,16 @@ export default function Game({
         currentPlayer={currentPlayer}
         player1={player1}
         player2={player2}
+        handleSetModalReset={handleSetModalReset}
       />
-      <Grid 
-        handleSetCurrentPlayer={handleSetCurrentPlayer} 
-        currentPlayer={currentPlayer}
+      <Grid
         handleSetGrid={handleSetGrid}
         grid={grid}
         checkWin={checkWin}
+        currentPlayer={currentPlayer}
+        player1={player1}
+        player2={player2}
+        enemy={enemy}
       />
       <Footer 
         player1={player1}

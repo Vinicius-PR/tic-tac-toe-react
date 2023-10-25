@@ -25,23 +25,6 @@ export const ModalContent = styled.div`
   align-items: center;
 `
 
-export const WinnerBox = styled.div`
-  color: ${props => props.theme.silver};
-  margin: 16px 0 24px;
-
-  display: flex;
-  gap: 24px;
-  align-items: center;
-
-  &.X-mark {
-    color: ${props => props.theme.lightBlue};
-  }
-
-  &.O-mark {
-    color: ${props => props.theme.lightYellow};
-  }
-`
-
 export const ButtonBox = styled.div`
   display: flex;
   gap: 16px;

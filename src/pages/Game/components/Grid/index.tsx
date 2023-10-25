@@ -1,30 +1,164 @@
 import { GridCell, GridContainer } from "./styles";
-import { GridArrayProps } from "../../../../App";
-import { useState } from "react";
+import { GridArrayProps, PlayerProps } from "../../../../App";
+import { useEffect, useState } from "react";
 
 interface GridProps {
-  handleSetCurrentPlayer: () => void
-  currentPlayer: string
   handleSetGrid: (position: number) => void
   grid: GridArrayProps[]
   checkWin: () => number[]
+  currentPlayer: string
+  player1: PlayerProps
+  player2: PlayerProps
+  enemy: 'player' | 'cpu' | ''
 }
 
-export default function Grid({handleSetCurrentPlayer, currentPlayer, handleSetGrid, grid, checkWin}: GridProps) {
+export default function Grid({ handleSetGrid, grid, checkWin, currentPlayer, player2, player1, enemy}: GridProps) {
 
   const [winPositions, setWinPositions] = useState<number[]>([])
-
+  const [canClickCell, setCanClickCell] = useState(true)
+  
   function onGridCellClick(position: number) {
     handleSetGrid(position)
     setWinPositions(checkWin())
   }
+
+  function computerMove() {
+    let availableSpots:number[] = []
+
+    grid.forEach((value, index) => {
+      if (value.mark === '') {
+        availableSpots.push(index)
+      }
+    })
+
+    const enemyMark = player1.mark
+    const cpuMark = player2.mark
+
+    // CPU will try to win
+    if (grid[1].mark === cpuMark && grid[2].mark === cpuMark && availableSpots.includes(0)) {
+      onGridCellClick(0)
+    } else if (grid[0].mark === cpuMark && grid[2].mark === cpuMark && availableSpots.includes(1)) {
+      onGridCellClick(1)
+    } else if (grid[0].mark === cpuMark && grid[1].mark === cpuMark && availableSpots.includes(2)) {
+      onGridCellClick(2)
+    } else if (grid[4].mark === cpuMark && grid[5].mark === cpuMark && availableSpots.includes(3)) {
+      onGridCellClick(3)
+    } else if (grid[3].mark === cpuMark && grid[5].mark === cpuMark && availableSpots.includes(4)) {
+      onGridCellClick(4)
+    } else if (grid[3].mark === cpuMark && grid[4].mark === cpuMark && availableSpots.includes(5)) {
+      onGridCellClick(5)
+    } else if (grid[7].mark === cpuMark && grid[8].mark === cpuMark && availableSpots.includes(6)) {
+      onGridCellClick(6)
+    } else if (grid[6].mark === cpuMark && grid[8].mark === cpuMark && availableSpots.includes(7)) {
+      onGridCellClick(7)
+    } else if (grid[6].mark === cpuMark && grid[7].mark === cpuMark && availableSpots.includes(8)) {
+      onGridCellClick(8)
+    } else if (grid[3].mark === cpuMark && grid[6].mark === cpuMark && availableSpots.includes(0)) {
+      onGridCellClick(0)
+    } else if (grid[0].mark === cpuMark && grid[6].mark === cpuMark && availableSpots.includes(3)) {
+      onGridCellClick(3)
+    } else if (grid[0].mark === cpuMark && grid[3].mark === cpuMark && availableSpots.includes(6)) {
+      onGridCellClick(6)
+    } else if (grid[4].mark === cpuMark && grid[7].mark === cpuMark && availableSpots.includes(1)) {
+      onGridCellClick(1)
+    } else if (grid[1].mark === cpuMark && grid[7].mark === cpuMark && availableSpots.includes(4)) {
+      onGridCellClick(4)
+    } else if (grid[1].mark === cpuMark && grid[4].mark === cpuMark && availableSpots.includes(7)) {
+      onGridCellClick(7)
+    } else if (grid[5].mark === cpuMark && grid[8].mark === cpuMark && availableSpots.includes(2)) {
+      onGridCellClick(2)
+    } else if (grid[2].mark === cpuMark && grid[8].mark === cpuMark && availableSpots.includes(5)) {
+      onGridCellClick(5)
+    } else if (grid[2].mark === cpuMark && grid[5].mark === cpuMark && availableSpots.includes(8)) {
+      onGridCellClick(8)
+    } else if (grid[4].mark === cpuMark && grid[8].mark === cpuMark && availableSpots.includes(0)) {
+      onGridCellClick(0)
+    } else if (grid[0].mark === cpuMark && grid[8].mark === cpuMark && availableSpots.includes(4)) {
+      onGridCellClick(4)
+    } else if (grid[0].mark === cpuMark && grid[4].mark === cpuMark && availableSpots.includes(8)) {
+      onGridCellClick(8)
+    } else if (grid[4].mark === cpuMark && grid[6].mark === cpuMark && availableSpots.includes(2)) {
+      onGridCellClick(2)
+    } else if (grid[2].mark === cpuMark && grid[6].mark === cpuMark && availableSpots.includes(4)) {
+      onGridCellClick(4)
+    } else if (grid[2].mark === cpuMark && grid[4].mark === cpuMark && availableSpots.includes(6)) {
+      onGridCellClick(6)
+    }
+    // CPU will try to block the player:
+     else if (grid[1].mark === enemyMark && grid[2].mark === enemyMark && availableSpots.includes(0)) {
+      onGridCellClick(0)
+    } else if (grid[0].mark === enemyMark && grid[2].mark === enemyMark && availableSpots.includes(1)) {
+      onGridCellClick(1)
+    } else if (grid[0].mark === enemyMark && grid[1].mark === enemyMark && availableSpots.includes(2)) {
+      onGridCellClick(2)
+    } else if (grid[4].mark === enemyMark && grid[5].mark === enemyMark && availableSpots.includes(3)) {
+      onGridCellClick(3)
+    } else if (grid[3].mark === enemyMark && grid[5].mark === enemyMark && availableSpots.includes(4)) {
+      onGridCellClick(4)
+    } else if (grid[3].mark === enemyMark && grid[4].mark === enemyMark && availableSpots.includes(5)) {
+      onGridCellClick(5)
+    } else if (grid[7].mark === enemyMark && grid[8].mark === enemyMark && availableSpots.includes(6)) {
+      onGridCellClick(6)
+    } else if (grid[6].mark === enemyMark && grid[8].mark === enemyMark && availableSpots.includes(7)) {
+      onGridCellClick(7)
+    } else if (grid[6].mark === enemyMark && grid[7].mark === enemyMark && availableSpots.includes(8)) {
+      onGridCellClick(8)
+    } else if (grid[3].mark === enemyMark && grid[6].mark === enemyMark && availableSpots.includes(0)) {
+      onGridCellClick(0)
+    } else if (grid[0].mark === enemyMark && grid[6].mark === enemyMark && availableSpots.includes(3)) {
+      onGridCellClick(3)
+    } else if (grid[0].mark === enemyMark && grid[3].mark === enemyMark && availableSpots.includes(6)) {
+      onGridCellClick(6)
+    } else if (grid[4].mark === enemyMark && grid[7].mark === enemyMark && availableSpots.includes(1)) {
+      onGridCellClick(1)
+    } else if (grid[1].mark === enemyMark && grid[7].mark === enemyMark && availableSpots.includes(4)) {
+      onGridCellClick(4)
+    } else if (grid[1].mark === enemyMark && grid[4].mark === enemyMark && availableSpots.includes(7)) {
+      onGridCellClick(7)
+    } else if (grid[5].mark === enemyMark && grid[8].mark === enemyMark && availableSpots.includes(2)) {
+      onGridCellClick(2)
+    } else if (grid[2].mark === enemyMark && grid[8].mark === enemyMark && availableSpots.includes(5)) {
+      onGridCellClick(5)
+    } else if (grid[2].mark === enemyMark && grid[5].mark === enemyMark && availableSpots.includes(8)) {
+      onGridCellClick(8)
+    } else if (grid[4].mark === enemyMark && grid[8].mark === enemyMark && availableSpots.includes(0)) {
+      onGridCellClick(0)
+    } else if (grid[0].mark === enemyMark && grid[8].mark === enemyMark && availableSpots.includes(4)) {
+      onGridCellClick(4)
+    } else if (grid[0].mark === enemyMark && grid[4].mark === enemyMark && availableSpots.includes(8)) {
+      onGridCellClick(8)
+    } else if (grid[4].mark === enemyMark && grid[6].mark === enemyMark && availableSpots.includes(2)) {
+      onGridCellClick(2)
+    } else if (grid[2].mark === enemyMark && grid[6].mark === enemyMark && availableSpots.includes(4)) {
+      onGridCellClick(4)
+    } else if (grid[2].mark === enemyMark && grid[4].mark === enemyMark && availableSpots.includes(6)) {
+      onGridCellClick(6)
+    } 
+    // Or just put in a random spot:
+    else {
+      const randomSpot = Math.floor(Math.random() * (availableSpots.length));
+      onGridCellClick(availableSpots[randomSpot])
+    }
+  } 
+
+  useEffect(() => {
+    if (currentPlayer === player2.name && player2.displayName === 'CPU') {
+      console.log('computer turn')
+      setCanClickCell(false)
+      // Used a timer so people can see the computer "thinking"
+      setTimeout(() => {
+        computerMove()
+        setCanClickCell(true)
+      }, 300)
+    }
+  }, [currentPlayer])
 
   return (
     <GridContainer>
 
       <GridCell 
         onClick={() => {
-          if (grid[0].mark === '') {
+          if (grid[0].mark === '' && canClickCell) {
             onGridCellClick(0)
           }
         }}
@@ -43,7 +177,7 @@ export default function Grid({handleSetCurrentPlayer, currentPlayer, handleSetGr
 
       <GridCell 
         onClick={() => {
-          if (grid[1].mark === '') {
+          if (grid[1].mark === '' && canClickCell) {
             onGridCellClick(1)
           }
         }}
@@ -62,7 +196,7 @@ export default function Grid({handleSetCurrentPlayer, currentPlayer, handleSetGr
 
       <GridCell 
         onClick={() => {
-          if (grid[2].mark === '') {
+          if (grid[2].mark === '' && canClickCell) {
             onGridCellClick(2)
           }
         }}
@@ -81,7 +215,7 @@ export default function Grid({handleSetCurrentPlayer, currentPlayer, handleSetGr
 
       <GridCell 
         onClick={() => {
-          if (grid[3].mark === '') {
+          if (grid[3].mark === '' && canClickCell) {
             onGridCellClick(3)
           }
         }}
@@ -100,7 +234,7 @@ export default function Grid({handleSetCurrentPlayer, currentPlayer, handleSetGr
 
       <GridCell 
         onClick={() => {
-          if (grid[4].mark === '') {
+          if (grid[4].mark === '' && canClickCell) {
             onGridCellClick(4)
           }
         }}
@@ -119,7 +253,7 @@ export default function Grid({handleSetCurrentPlayer, currentPlayer, handleSetGr
 
       <GridCell 
         onClick={() => {
-          if (grid[5].mark === '') {
+          if (grid[5].mark === '' && canClickCell) {
             onGridCellClick(5)
           }
         }}
@@ -138,7 +272,7 @@ export default function Grid({handleSetCurrentPlayer, currentPlayer, handleSetGr
 
       <GridCell 
         onClick={() => {
-          if (grid[6].mark === '') {
+          if (grid[6].mark === '' && canClickCell) {
             onGridCellClick(6)
           }
         }}
@@ -157,7 +291,7 @@ export default function Grid({handleSetCurrentPlayer, currentPlayer, handleSetGr
 
       <GridCell 
         onClick={() => {
-          if (grid[7].mark === '') {
+          if (grid[7].mark === '' && canClickCell) {
             onGridCellClick(7)
           }
         }}
@@ -176,7 +310,7 @@ export default function Grid({handleSetCurrentPlayer, currentPlayer, handleSetGr
 
       <GridCell 
         onClick={() => {
-          if (grid[8].mark === '') {
+          if (grid[8].mark === '' && canClickCell) {
             onGridCellClick(8)
           }
         }}

@@ -13,6 +13,7 @@ import xImgOutline from './assets/icon-x-outline.svg'
 import oImg from './assets/icon-o.svg'
 import oImgOutline from './assets/icon-o-outline.svg'
 import ModalWinner from "./components/ModalWinner"
+import ModalReset from "./components/ModalReset"
 
 export interface GridArrayProps {
   src: string
@@ -73,7 +74,7 @@ function App() {
   }
 
   let initialPlayer1 = {
-    name: '',
+    name: 'Player 1',
     displayName: '',
     mark: '',
     points: 0
@@ -84,7 +85,7 @@ function App() {
   }
 
   let initialPlayer2 = {
-    name: '',
+    name: 'Player 2',
     displayName: '',
     mark: '',
     points: 0
@@ -106,13 +107,21 @@ function App() {
     initialTie = JSON.parse(currentinitialTieAsJSON)
   }
 
+  let initialEnemy: 'player' | 'cpu' | '' = ''
+  const initialEnemyAsJSON = sessionStorage.getItem("tic-tac-toe:enemy-state")
+  if (initialEnemyAsJSON) {
+    initialEnemy = JSON.parse(initialEnemyAsJSON)
+  }
+
   const [ player1, setPlayer1] = useState<PlayerProps>(initialPlayer1)
   const [ player2, setPlayer2] = useState<PlayerProps>(initialPlayer2)
   const [ currentPlayer, setCurrentPlayer ] = useState(initialCurrentPlayer)
+  const [enemy, setEnemy] = useState<'player' | 'cpu' | ''>(initialEnemy)
   const [grid, setGrid] = useState<GridArrayProps[]>(initialGrid)
   const [winner, setWinner] = useState('')
   const [tie, setTie] = useState(initialTie)
   const [moves, setMoves] = useState(0)
+  const [isModalResetOpen, setIsModalResetOpen] = useState(false)
   
 
   // ******* useEffect to set Session Storage *******
@@ -137,9 +146,18 @@ function App() {
   }, [currentPlayer])
 
   useEffect(() => {
-    const currentinitialTieJSON = JSON.stringify(tie)
-    sessionStorage.setItem("tic-tac-toe:tie-state", currentinitialTieJSON)
-  })
+    const currentTieStateJSON = JSON.stringify(tie)
+    sessionStorage.setItem("tic-tac-toe:tie-state", currentTieStateJSON)
+  }, [tie])
+
+  useEffect(() => {
+    const currentEnemyStateJSON = JSON.stringify(enemy)
+    sessionStorage.setItem("tic-tac-toe:enemy-state", currentEnemyStateJSON)
+  }, [enemy])
+
+  function handleSetEnemy(enemy: 'player' | 'cpu' | '') {
+    setEnemy(enemy)
+  }
 
   function handleSetPlayerMark(mark: string) {
     setPlayer1({
@@ -156,19 +174,22 @@ function App() {
   function handleSetNamesPlayer(enemy: string) {
     setPlayer1({
       ...player1,
-      name: 'Player 1',
       displayName: enemy === 'cpu' ? 'YOU' : 'P1'
     })
 
     setPlayer2({
       ...player2,
-      name: 'Player 2',
       displayName: enemy === 'cpu' ? 'CPU' : 'P2'
     })
   }
 
+  function handleSetModalReset() {
+    setIsModalResetOpen(true)
+  }
+
   function handleSetFirstPlayer() {
     const currentPlayerStoredStateAsJSON = sessionStorage.getItem("tic-tac-toe:currentPlayer-state");
+    
     if (currentPlayerStoredStateAsJSON === 'X' || currentPlayerStoredStateAsJSON === 'O') {
       return
     }
@@ -181,6 +202,7 @@ function App() {
   }
 
   function handleSetCurrentPlayer() {
+    console.log('handle set current player')
     if (currentPlayer === player1.name) {
       setCurrentPlayer(player2.name)
     } else {
@@ -350,21 +372,22 @@ function App() {
       handleSetPointsPlayer(currentPlayer)
       return [2, 4, 6]
       
+    } else {
+      handleSetCurrentPlayer()
+      setMoves((state) => state + 1)
+      return []
     }
-    setMoves((state) => state + 1)
-    handleSetCurrentPlayer()
-    return []
   }
 
   function quitGame() {
     setPlayer1({
-      name: '',
+      name: 'Player 1',
       displayName: '',
       mark: '',
       points: 0
     })
     setPlayer2({
-      name: '',
+      name: 'Player 2',
       displayName: '',
       mark: '',
       points: 0
@@ -454,6 +477,67 @@ function App() {
       }
     ])
     setMoves(0)
+
+    // if(player1.mark === 'X') {
+    //   setCurrentPlayer(player1.name)
+    // } else {
+    //   setCurrentPlayer(player2.name)
+    // }
+
+    handleSetFirstPlayer()
+  }
+
+  function restart() {
+    setPlayer1((state) => {
+      return {...state, points:0}
+    })
+
+    setPlayer2((state) => {
+      return {...state, points:0}
+    })
+
+    setGrid([
+      {
+        src: '',
+        mark: ''
+      },
+      {
+        src: '',
+        mark: ''
+      },
+      {
+        src: '',
+        mark: ''
+      },
+      {
+        src: '',
+        mark: ''
+      },
+      {
+        src: '',
+        mark: ''
+      },
+      {
+        src: '',
+        mark: ''
+      },
+      {
+        src: '',
+        mark: ''
+      },
+      {
+        src: '',
+        mark: ''
+      },
+      {
+        src: '',
+        mark: ''
+      }
+    ])
+    setTie(0)
+    setMoves(0)
+    setIsModalResetOpen(false)
+
     if(player1.mark === 'X') {
       setCurrentPlayer(player1.name)
     } else {
@@ -461,13 +545,16 @@ function App() {
     }
   }
 
-  console.log(moves)
+  function cancelRestart() {
+    setIsModalResetOpen(false)
+  }
+
   if (moves === 9) {
     setTie((state) => state + 1)
     setWinner('tie')
     setMoves(0)
   }
-
+  console.log('current player is ', currentPlayer)
   return (
     <div>
       <ThemeProvider theme={defaultTheme} >
@@ -481,27 +568,29 @@ function App() {
                   <Home 
                     handleSetPlayerMark={handleSetPlayerMark} 
                     handleSetNamesPlayer={handleSetNamesPlayer}
+                    handleSetFirstPlayer={handleSetFirstPlayer}
+                    handleSetEnemy={handleSetEnemy}
                   />
                 }/>
 
             <Route 
               path="/game" 
               element={
-                <Game 
-                  handleSetCurrentPlayer={handleSetCurrentPlayer} 
+                <Game
                   currentPlayer={currentPlayer}
                   handleSetGrid={handleSetGrid}
                   grid={grid}
-                  handleSetFirstPlayer={handleSetFirstPlayer}
                   checkWin={checkWin}
                   player1={player1}
                   player2={player2}
                   tie={tie}
+                  handleSetModalReset={handleSetModalReset}
+                  enemy={enemy}
                   />
                 }/>
           </Routes>
           {
-          winner &&
+            winner &&
             <ModalWinner 
               player1={player1} 
               player2={player2} 
@@ -509,6 +598,14 @@ function App() {
               nextRound={nextRound}
               quitGame={quitGame}
             /> 
+          }
+
+          {
+            isModalResetOpen && 
+            <ModalReset 
+              restart={restart}
+              cancelRestart={cancelRestart}
+            />
           }
         </BrowserRouter>
       </ThemeProvider>

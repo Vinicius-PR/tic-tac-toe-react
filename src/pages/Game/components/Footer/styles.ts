@@ -7,9 +7,10 @@ export const FooterContainer = styled.footer`
 `
 
 export const FooterBox = styled.div<{$backGroundColor: string}>`
-  width: 140px;
-  height: 72px;
+  width: 8.75rem; //140px
+  height: 4.5rem; //72px
   display: flex;
+  text-align: center;
   flex-direction: column;
   justify-content: center;
   align-items: center;

@@ -25,7 +25,7 @@ export const SelectContainer = styled.div`
   flex-direction: column;
   align-items: center;
   width: 100%;
-  padding: 24px;
+  padding: 1.5rem; //24px
   background-color: ${props => props.theme.semiDarkNavy};
   border-radius: 15px;
 
@@ -33,7 +33,7 @@ export const SelectContainer = styled.div`
     margin-top: 24px;
     margin-bottom: 17px;
     background-color: ${props => props.theme.darkNavy};
-    height: 72px;
+    height: 4.5rem; // 72px
     width: 100%;
     display: flex;
     align-items: center;
@@ -43,11 +43,12 @@ export const SelectContainer = styled.div`
     label {
       border-radius: 10px;
       flex: 1;
-      height: 54px;
+      height: calc(100% - 16px);
       text-align: center;
       display: flex;
       justify-content: center;
       align-items: center;
+      border: 1px solid transparent;
       cursor: pointer;
 
       &:first-child {
@@ -56,6 +57,10 @@ export const SelectContainer = styled.div`
 
       &:last-child {
         margin-right: 8px;
+      }
+
+      &:hover {
+        border-color: ${props => props.theme.silver};
       }
       svg {
         path {
