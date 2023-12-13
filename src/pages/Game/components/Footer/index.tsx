@@ -1,29 +1,26 @@
-import { PlayerProps } from "../../../../App";
-import { BodyText, HeadingMedium } from "../../../../styles/global";
-import { FooterBox, FooterContainer } from "./styles";
+import { useContext } from 'react'
+import { BodyText, HeadingMedium } from "../../../../styles/global"
+import { FooterBox, FooterContainer } from "./styles"
+import { GameContext } from '../../../../context/GameContext'
 
-interface FooterProps {
-  player1: PlayerProps
-  player2: PlayerProps
-  tie: number
-}
+export default function Footer() {
 
-export default function Footer({ player1, player2, tie }: FooterProps) {
+  const { state } = useContext(GameContext)
   return (
     <FooterContainer>
       <FooterBox $backGroundColor={'#31C3BD'}>
-        <BodyText>X {player1.mark === 'X' ? `(${player1.displayName})` : `(${player2.displayName})`}</BodyText>
-        <HeadingMedium>{player1.mark === 'X' ? player1.points : player2.points}</HeadingMedium>
+        <BodyText>X {state.player1.mark === 'x' ? `(${state.player1.displayName})` : `(${state.player2.displayName})`}</BodyText>
+        <HeadingMedium>{state.player1.mark === 'x' ? state.player1.points : state.player2.points}</HeadingMedium>
       </FooterBox>
 
       <FooterBox $backGroundColor={'#A8BFC9'}>
         <BodyText>TIES</BodyText>
-        <HeadingMedium>{tie}</HeadingMedium>
+        <HeadingMedium>{state.tie}</HeadingMedium>
       </FooterBox>
 
       <FooterBox $backGroundColor={'#F2B137'}>
-        <BodyText>O {player1.mark === 'O' ? `(${player1.displayName})` : `(${player2.displayName})`}</BodyText>
-        <HeadingMedium>{player1.mark === 'O' ? player1.points : player2.points}</HeadingMedium>
+        <BodyText>O {state.player1.mark === 'o' ? `(${state.player1.displayName})` : `(${state.player2.displayName})`}</BodyText>
+        <HeadingMedium>{state.player1.mark === 'o' ? state.player1.points : state.player2.points}</HeadingMedium>
       </FooterBox>
     </FooterContainer>
   )

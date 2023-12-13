@@ -1,30 +1,14 @@
 import { HomeContainer, SelectContainer, ButtonContainer } from "./styles"
 import logo from '../../assets/logo.svg'
 import { BodyText, HeadingExtraSmall, HeadingSmall, PrimaryBtnYellow, PrimaryBtnBlue } from "../../styles/global"
-import { useState } from "react"
-import { useNavigate } from 'react-router-dom'
+import { useState, useContext } from "react"
+import { GameContext } from "../../context/GameContext"
+import { Mark } from "../../context/types"
 
-interface HomeProps {
-  handleSetPlayerMark: (mark: string) => void
-  handleSetNamesPlayer: (enemy: string) => void
-  handleSetFirstPlayer: () => void
-  handleSetEnemy: (enemy: 'player' | 'cpu' | '') => void
-}
-
-export default function Home({ handleSetPlayerMark, handleSetNamesPlayer, handleSetFirstPlayer, handleSetEnemy }: HomeProps) {
-
-  const [isMarkSelected, setIsMarkSelected] = useState(false)
-  let navigate = useNavigate()
-
-  function onButtonClick(versus: 'player' | 'cpu' | '') {
-    const canSetFirstPlayerJSON = JSON.stringify(true);
-    sessionStorage.setItem("tic-tac-toe:canSetFirstPlayer", canSetFirstPlayerJSON)
-    
-    handleSetEnemy(versus)
-    handleSetNamesPlayer(versus)
-    handleSetFirstPlayer()
-    navigate('/game')
-  }
+export default function Home() {
+  
+  const [player1Mark, setPlayer1Mark] = useState<Mark>('')
+  const { initGame} = useContext(GameContext)
 
   return (
     <HomeContainer>
@@ -43,8 +27,7 @@ export default function Home({ handleSetPlayerMark, handleSetNamesPlayer, handle
               id="markX" 
               value={'X'} 
               onInput={() => {
-                handleSetPlayerMark('X')
-                setIsMarkSelected(true)
+                setPlayer1Mark('x')
               }} />
           </label>
 
@@ -59,8 +42,7 @@ export default function Home({ handleSetPlayerMark, handleSetNamesPlayer, handle
               id="markO" 
               value={'O'} 
               onInput={() => {
-                handleSetPlayerMark('O')
-                setIsMarkSelected(true)
+                setPlayer1Mark('o')
               }}/>
           </label>
         </form>
@@ -70,21 +52,20 @@ export default function Home({ handleSetPlayerMark, handleSetNamesPlayer, handle
       <ButtonContainer>
 
         <PrimaryBtnYellow 
-          disabled={!isMarkSelected} 
+          disabled={player1Mark === ''}
           onClick={() => {
-            onButtonClick('cpu')
+            initGame(player1Mark, 'cpu')
           }}>
           <HeadingSmall>new game (vs cpu)</HeadingSmall>
         </PrimaryBtnYellow>
 
         <PrimaryBtnBlue 
-          disabled={!isMarkSelected} 
+          disabled={player1Mark === ''}
           onClick={() => {
-            onButtonClick('player')
+            initGame(player1Mark, 'player')
           }}>
           <HeadingSmall>new game (vs player)</HeadingSmall>
         </PrimaryBtnBlue>
-        
       </ButtonContainer>     
 
     </HomeContainer>
