@@ -132,8 +132,16 @@ export function GameReducer(
     }
 
     case ActionsTypes.RESTART_GAME: {
+      const currentFirstPlayer = state.firstPlayer
+      let isComputerMove = false
+      if (state.gameMode === 'cpu' && currentFirstPlayer === 'Player 2') {
+        isComputerMove = true
+      }
       return {
         ...state,
+        isComputerMove: isComputerMove,
+        firstPlayer: currentFirstPlayer,
+        currentPlayer: currentFirstPlayer,
         grid: [...initialGrid],
         tie: 0,
         player1: {
