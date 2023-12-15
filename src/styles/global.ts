@@ -38,9 +38,13 @@ const BaseSecondaryButton = styled.button`
   transition: all 0.2s ease;
   color: ${props => props.theme.darkNavy};
   padding: 15px 17px;
+
+  @media (max-width: 300px) {
+    padding: 10px 5px;
+  }
 `
 
-export const PrimaryBtnYellow  = styled(BasePrimaryButton)`
+export const PrimaryBtnYellow = styled(BasePrimaryButton)`
   background-color: ${props => props.theme.lightYellow};
   box-shadow: 0px -8px 0px 0px #CC8B13 inset;
 
@@ -85,12 +89,17 @@ export const BodyText = styled.p`
   color: ${props => props.theme.silver};
 `
 
-export const HeadingLarge = styled.h1 `
+export const HeadingLarge = styled.h1`
   font-size: 2.5rem; // 40px
   letter-spacing: 2.5px;
 
-  @media (max-width: 345px) {
+  @media (max-width: 430px) {
     font-size: 1.5rem; // 24px
+    letter-spacing: 1.5px;
+  }
+
+  @media (max-width: 300px) {
+    font-size: 1rem; // 16px
     letter-spacing: 1.5px;
   }
 `
@@ -99,7 +108,7 @@ export const HeadingMedium = styled.h2`
   font-size: 1.5rem; // 24px
   letter-spacing: 1.5px;
 
-  @media (max-width: 345px) {
+  @media (max-width: 430px) {
     font-size: 1.25rem;  // 20px
     letter-spacing: 1.25px;
   }
@@ -108,13 +117,23 @@ export const HeadingMedium = styled.h2`
 export const HeadingSmall = styled.h3`
   font-size: 1.25rem; // 20px
   letter-spacing: 1.25px;
+
+  @media (max-width: 430px) {
+    font-size: 1rem;  // 16px
+    letter-spacing: 0.875px;
+  }
+
+  @media (max-width: 300px) {
+    font-size: 0.875rem; // 14px
+    letter-spacing: 0.875px;
+  }
 `
 
 export const HeadingExtraSmall = styled.h4`
   font-size: 1rem; // 16px
   letter-spacing: 1px;
 
-  @media (max-width: 345px) {
+  @media (max-width: 430px) {
     font-size: 0.875rem;  // 14px
     letter-spacing: 0.875px;
   }

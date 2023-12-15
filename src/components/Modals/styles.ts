@@ -40,6 +40,20 @@ export const WinnerBox = styled.div`
   &.O-mark {
     color: ${props => props.theme.lightYellow};
   }
+
+  @media (max-width: 430px) {
+    img {
+      width: 50px;
+      height: 50px;
+    }
+  }
+
+  @media (max-width: 300px) {
+    img {
+      width: 40px;
+      height: 40px;
+    }
+  } 
 `
 
 export const ButtonBox = styled.div`
