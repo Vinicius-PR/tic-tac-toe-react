@@ -6,7 +6,7 @@ export const FooterContainer = styled.footer`
   width: 100%;
 `
 
-export const FooterBox = styled.div<{$backGroundColor: string}>`
+export const FooterBox = styled.div<{ $backGroundColor: string }>`
   width: 8.75rem; //140px
   height: 4.5rem; //72px
   display: flex;
@@ -21,7 +21,7 @@ export const FooterBox = styled.div<{$backGroundColor: string}>`
     color: ${props => props.theme.darkNavy};
   }
 
-  @media (max-width: 490px) {
+  @media (max-width: 490px), (max-height: 620px) {
     max-width: 96px;
   }
 

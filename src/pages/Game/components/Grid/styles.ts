@@ -26,7 +26,7 @@ export const GridCell = styled.div`
   border-radius: 15px;
   cursor: pointer;
 
-  @media (max-width: 490px) {
+  @media (max-width: 490px), (max-height: 620px) {
     width: 96px;
     height: 96px;
 

@@ -13,4 +13,8 @@ export const GameContainer = styled.div`
   @media (max-width: 490px) {
     justify-content: flex-start;
   }
+
+  @media (max-height: 620px) {
+    width: 25rem;
+  }
 `

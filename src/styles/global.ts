@@ -93,7 +93,7 @@ export const HeadingLarge = styled.h1`
   font-size: 2.5rem; // 40px
   letter-spacing: 2.5px;
 
-  @media (max-width: 430px) {
+  @media (max-width: 430px), (max-height: 620px) {
     font-size: 1.5rem; // 24px
     letter-spacing: 1.5px;
   }
@@ -108,7 +108,7 @@ export const HeadingMedium = styled.h2`
   font-size: 1.5rem; // 24px
   letter-spacing: 1.5px;
 
-  @media (max-width: 430px) {
+  @media (max-width: 430px), (max-height: 620px) {
     font-size: 1.25rem;  // 20px
     letter-spacing: 1.25px;
   }
@@ -118,7 +118,7 @@ export const HeadingSmall = styled.h3`
   font-size: 1.25rem; // 20px
   letter-spacing: 1.25px;
 
-  @media (max-width: 430px) {
+  @media (max-width: 430px), (max-height: 620px) {
     font-size: 1rem;  // 16px
     letter-spacing: 0.875px;
   }
@@ -133,7 +133,7 @@ export const HeadingExtraSmall = styled.h4`
   font-size: 1rem; // 16px
   letter-spacing: 1px;
 
-  @media (max-width: 430px) {
+  @media (max-width: 430px), (max-height: 620px) {
     font-size: 0.875rem;  // 14px
     letter-spacing: 0.875px;
   }
